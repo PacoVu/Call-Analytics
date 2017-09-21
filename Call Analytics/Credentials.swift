@@ -8,12 +8,12 @@
 
 struct Configs {
     let AppName = "CallAnalytics"
-    static let AppKey = "wP8ISPyTShOGhyGxPuWC4A"
-    static let AppSecret = "qad6qHnyTRKjpWETAXrf1ghPXbLFD3QKWuNnJiPUd6IQ"    
+    static let AppKey = "Your-AppKey"
+    static let AppSecret = "Your-AppSecret"
 }
 
 struct Credentials {
-    static let Username = "13129828160"
-    static let Password = "P@ssw0rd"
-    static let Extension = "101"
+    static let Username = ""
+    static let Password = ""
+    static let Extension = ""
 }
