@@ -12,7 +12,37 @@
 		EA69F2BA1F72B4DB004DE3FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA69F2B81F72B4DB004DE3FD /* Main.storyboard */; };
 		EA69F2BC1F72B4DB004DE3FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA69F2BB1F72B4DB004DE3FD /* Assets.xcassets */; };
 		EA69F2BF1F72B4DB004DE3FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA69F2BD1F72B4DB004DE3FD /* LaunchScreen.storyboard */; };
+		EA69F2D21F72CD59004DE3FD /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA69F2D11F72CD59004DE3FD /* Credentials.swift */; };
+		EA69F2D41F72CFD2004DE3FD /* CallInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA69F2D31F72CFD2004DE3FD /* CallInfoViewController.swift */; };
+		EA69F2E31F730564004DE3FD /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA69F2DE1F730564004DE3FD /* Alamofire.framework */; };
+		EA69F2E41F730564004DE3FD /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EA69F2DE1F730564004DE3FD /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		EA69F2E51F730564004DE3FD /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA69F2DF1F730564004DE3FD /* CryptoSwift.framework */; };
+		EA69F2E61F730564004DE3FD /* CryptoSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EA69F2DF1F730564004DE3FD /* CryptoSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		EA69F2E71F730564004DE3FD /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA69F2E01F730564004DE3FD /* ObjectMapper.framework */; };
+		EA69F2E81F730564004DE3FD /* ObjectMapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EA69F2E01F730564004DE3FD /* ObjectMapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		EA69F2E91F730564004DE3FD /* PubNub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA69F2E11F730564004DE3FD /* PubNub.framework */; };
+		EA69F2EA1F730564004DE3FD /* PubNub.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EA69F2E11F730564004DE3FD /* PubNub.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		EA69F2EB1F730564004DE3FD /* RingCentral.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA69F2E21F730564004DE3FD /* RingCentral.framework */; };
+		EA69F2EC1F730564004DE3FD /* RingCentral.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EA69F2E21F730564004DE3FD /* RingCentral.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		EA69F2ED1F730564004DE3FD /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				EA69F2EA1F730564004DE3FD /* PubNub.framework in Embed Frameworks */,
+				EA69F2EC1F730564004DE3FD /* RingCentral.framework in Embed Frameworks */,
+				EA69F2E81F730564004DE3FD /* ObjectMapper.framework in Embed Frameworks */,
+				EA69F2E41F730564004DE3FD /* Alamofire.framework in Embed Frameworks */,
+				EA69F2E61F730564004DE3FD /* CryptoSwift.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		EA69F2B11F72B4DB004DE3FD /* Call Analytics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Call Analytics.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -22,6 +52,13 @@
 		EA69F2BB1F72B4DB004DE3FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EA69F2BE1F72B4DB004DE3FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EA69F2C01F72B4DB004DE3FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EA69F2D11F72CD59004DE3FD /* Credentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
+		EA69F2D31F72CFD2004DE3FD /* CallInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallInfoViewController.swift; sourceTree = "<group>"; };
+		EA69F2DE1F730564004DE3FD /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
+		EA69F2DF1F730564004DE3FD /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Build/iOS/CryptoSwift.framework; sourceTree = "<group>"; };
+		EA69F2E01F730564004DE3FD /* ObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectMapper.framework; path = Carthage/Build/iOS/ObjectMapper.framework; sourceTree = "<group>"; };
+		EA69F2E11F730564004DE3FD /* PubNub.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PubNub.framework; path = Carthage/Build/iOS/PubNub.framework; sourceTree = "<group>"; };
+		EA69F2E21F730564004DE3FD /* RingCentral.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RingCentral.framework; path = Carthage/Build/iOS/RingCentral.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +66,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA69F2E91F730564004DE3FD /* PubNub.framework in Frameworks */,
+				EA69F2EB1F730564004DE3FD /* RingCentral.framework in Frameworks */,
+				EA69F2E71F730564004DE3FD /* ObjectMapper.framework in Frameworks */,
+				EA69F2E31F730564004DE3FD /* Alamofire.framework in Frameworks */,
+				EA69F2E51F730564004DE3FD /* CryptoSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -38,6 +80,11 @@
 		EA69F2A81F72B4DB004DE3FD = {
 			isa = PBXGroup;
 			children = (
+				EA69F2DE1F730564004DE3FD /* Alamofire.framework */,
+				EA69F2DF1F730564004DE3FD /* CryptoSwift.framework */,
+				EA69F2E01F730564004DE3FD /* ObjectMapper.framework */,
+				EA69F2E11F730564004DE3FD /* PubNub.framework */,
+				EA69F2E21F730564004DE3FD /* RingCentral.framework */,
 				EA69F2B31F72B4DB004DE3FD /* Call Analytics */,
 				EA69F2B21F72B4DB004DE3FD /* Products */,
 			);
@@ -60,6 +107,8 @@
 				EA69F2BB1F72B4DB004DE3FD /* Assets.xcassets */,
 				EA69F2BD1F72B4DB004DE3FD /* LaunchScreen.storyboard */,
 				EA69F2C01F72B4DB004DE3FD /* Info.plist */,
+				EA69F2D11F72CD59004DE3FD /* Credentials.swift */,
+				EA69F2D31F72CFD2004DE3FD /* CallInfoViewController.swift */,
 			);
 			path = "Call Analytics";
 			sourceTree = "<group>";
@@ -74,6 +123,7 @@
 				EA69F2AD1F72B4DB004DE3FD /* Sources */,
 				EA69F2AE1F72B4DB004DE3FD /* Frameworks */,
 				EA69F2AF1F72B4DB004DE3FD /* Resources */,
+				EA69F2ED1F730564004DE3FD /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -96,6 +146,7 @@
 				TargetAttributes = {
 					EA69F2B01F72B4DB004DE3FD = {
 						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = JUGC3G98M6;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -136,7 +187,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA69F2D21F72CD59004DE3FD /* Credentials.swift in Sources */,
 				EA69F2B71F72B4DB004DE3FD /* ViewController.swift in Sources */,
+				EA69F2D41F72CFD2004DE3FD /* CallInfoViewController.swift in Sources */,
 				EA69F2B51F72B4DB004DE3FD /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -262,6 +315,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = JUGC3G98M6;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = "Call Analytics/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pacovu.Call-Analytics";
@@ -274,6 +332,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = JUGC3G98M6;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = "Call Analytics/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pacovu.Call-Analytics";

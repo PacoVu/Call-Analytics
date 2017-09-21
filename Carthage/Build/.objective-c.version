@@ -1,0 +1,9 @@
+{
+  "commitish" : "v4.7.1",
+  "iOS" : [
+    {
+      "hash" : "5311f1bbb2677f914dcff1753f7449ff4e620d4cf0ca45940a0581f530ef8ced",
+      "name" : "PubNub"
+    }
+  ]
+}

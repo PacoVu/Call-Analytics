@@ -7,12 +7,20 @@
 //
 
 import UIKit
+import RingCentral
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    var rc:RestClient!
+    func createRingCentralClient() -> RestClient {
+        if rc == nil {
+            rc = RestClient(appKey: Configs.AppKey, appSecret: Configs.AppSecret, production: false)
+        }
+        return rc
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
