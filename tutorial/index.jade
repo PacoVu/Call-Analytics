@@ -124,9 +124,43 @@
 
       ![](images/image08.png)
 
-  .step(data-title='Next step', data-file='Call Analytics/CallInfoViewController.swift')
+  .step(data-title='Next step', data-file='Call Analytics/CallInfoViewController.swift', data-highlight='16-26')
     :markdown
-      ### Connect UIs to code
+      ### Connect the input view UIs to code
       Now click the Assistant button in the Xcode toolbar and connect the UI to code
 
-      ![](images/image06.png)
+  .step(data-title='Next step', data-file='Call Analytics/CallInfoViewController.swift', data-highlight='28-33')
+    :markdown
+      ### Connect the output view UIs to code
+      Now click the Assistant button in the Xcode toolbar and connect the UI to code
+
+  .step(data-title='Next step', data-file='Call Analytics/CallInfoViewController.swift', data-highlight='35-38')
+    :markdown
+      ### Define values for pickers
+      The valid values of input parameters are specified in RingCentral API reference.
+
+      * 'direction' is the direction of a call as incoming call or outgoing call
+      * 'type' is the type of a call as voice or fax call
+      * 'transport' is the type of call service as PSTN or VoIP
+      * 'view' is the direction of a call
+
+      ![](images/image12.png)
+
+  .step(data-title='Next step', data-file='Call Analytics/CallInfoViewController.swift', data-highlight='272-296')
+    :markdown
+      ### Implement the ReadBtnClicked function
+      We collect input and keep them in the calllogReq variable, then we call the calllog() function to fetch the call log data from RingCentral server
+
+      ![](images/image12.png)
+
+  .step(data-title='Next step', data-file='Call Analytics/CallInfoViewController.swift', data-highlight='284-292')
+    :markdown
+      ### Parse the call log response
+      If the call was successful and we receive the response, we save the records array to the callLogRecords array and populate the data to the list view.
+
+  .step(data-title='Next step', data-file='Call Analytics/CallInfoViewController.swift', data-highlight='203-263')
+    :markdown
+      ### Parse a call log record
+      We parse each record and display record information on the list
+
+      ![](images/image13.png)

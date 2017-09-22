@@ -31,6 +31,7 @@ class CallInfoViewController: UIViewController, UITextViewDelegate, UITextFieldD
     @IBOutlet weak var outcallsDuration: UILabel!
     @IBOutlet weak var incallsDuration: UILabel!
     @IBOutlet weak var totalCallsDuration: UILabel!
+    @IBOutlet weak var count: UILabel!
     
     var directionArray: NSArray = ["Default", "Inbound", "Outbound"]
     var typeArray: NSArray = ["Default", "Voice", "Fax"]
@@ -180,18 +181,16 @@ class CallInfoViewController: UIViewController, UITextViewDelegate, UITextFieldD
             returnVal = 1
         }
         return returnVal
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var returnVal = 0
         if (collectionView == self.callLogResultCollectionView) {
             returnVal = callLogRecords.count
-            print(returnVal)
         }
         return returnVal
     }
-    
+    /*
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
         cell?.alpha = 0.7
@@ -201,7 +200,7 @@ class CallInfoViewController: UIViewController, UITextViewDelegate, UITextFieldD
         let cell = collectionView.cellForItem(at: indexPath)
         cell?.alpha = 1.0
     }
-    
+    */
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     {
         var cell : UICollectionViewCell!
@@ -307,12 +306,11 @@ class CallInfoViewController: UIViewController, UITextViewDelegate, UITextFieldD
     }
     
     func setCallsValues() {
-        //callTypes = ["InCall", "OutCall", "Voice Mail", "Fax", "Missed"]
-        
         var incall = 0;
         var outcall = 0
         var voice = 0
-        var fax = 0
+        var infax = 0
+        var outfax = 0
         var missed = 0
         var records = 0
         var totalIncallsDur = 0
@@ -322,14 +320,11 @@ class CallInfoViewController: UIViewController, UITextViewDelegate, UITextFieldD
         for item in callLogRecords {
             let record = item as! CallLogRecord
             if (record.type == "Fax") {
-                fax += 1
-                /*
-                 if (record.direction == "Inbound") {
-                 image.image = UIImage(named: "incomingFax")
-                 }else{
-                 image.image = UIImage(named: "outgoingFax")
-                 }
-                 */
+                if (record.direction == "Inbound") {
+                    infax += 1
+                }else{
+                    outfax += 1
+                }
             }else{
                 if (record.direction == "Inbound") {
                     incall += 1
@@ -338,7 +333,6 @@ class CallInfoViewController: UIViewController, UITextViewDelegate, UITextFieldD
                     outcall += 1
                     totalOutcallsDur += record.duration!
                 }
-                
             }
             if (record.message != nil || record.recording != nil) {
                 voice += 1
@@ -355,17 +349,16 @@ class CallInfoViewController: UIViewController, UITextViewDelegate, UITextFieldD
         formatter.unitsStyle = .brief
         
         var formattedString = formatter.string(from: TimeInterval(totalIncallsDur))!
-        
-        
         incallsDuration.text = String(format: "Total incalls duration: %@", formattedString)
         
         formattedString = formatter.string(from: TimeInterval(totalOutcallsDur))!
         outcallsDuration.text = String(format: "Total outcalls duration: %@", formattedString)
         
         let totalDur = totalIncallsDur + totalOutcallsDur
-        
         formattedString = formatter.string(from: TimeInterval(totalDur))!
         totalCallsDuration.text = String(format: "Total calls duration: %@", formattedString)
+        
+        count.text = String(format:"InCall: %d / OutCall: %d / Missed Call: %d / InFax: %d / OutFax: %d", incall, outcall, missed, infax, outfax)
     }
 }
 
