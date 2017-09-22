@@ -1,0 +1,82 @@
+.chapter(data-title='Your New Viewsaurus Tutorial')
+  .step(data-title='Welcome!', data-file='tutorial/config.json')
+    h2 Call Analytics for iOS
+
+    p This tutorial shows you how to build an iOS app to access RingCentral call logs data using the RingCentral Swift SDK.
+
+    h2 Prerequisites
+
+    li You must have a RingCentral developer account. If you don't have one, click here to create a free developer account
+    li You need to have basic knowledge how to build an iOS app.
+
+  .step(data-title='Let\'s start')
+    :markdown
+      ### Create a new iOS project
+      Create a Single View app and give it a name “Call Analytics”.
+
+      Open Terminal and browse to the “Call Analytics” folder and run the following command
+
+      `$ brew install carthage`
+
+      Create a Carthhage file and copy/paste the following line to the file
+
+      'github "ringcentral/ringcentral-swift"'
+
+      Now in Terminal window, run the command below:
+
+      `$ carthage update --platform iOS`
+
+  .step(data-title='Next step')
+    :markdown
+      ### Add RingCentral framework and it's dependencies to the project
+
+      Open the iOS project in XCode and goto the project settings. Select General and from the “Embedded Binaries” section, click the + button and browse to the “Carthage/Build/iOS” folder under the project and add the frameworks to the project as shown below.
+
+      ![](images/image00.png)
+
+  .step(data-title='Next step', data-file='Call Analytics/Credentials.swift', data-highlight='9-13')
+    :markdown
+      ### Specify RingCentral app credentials
+      Add a new file named “Credentials.swift” to the project. And specify the RingCentral AppKey and AppSecret.
+
+  .step(data-title='Next step', data-file='Call Analytics/AppDelegate.swift', data-highlight='10-23')
+    :markdown
+      ### Create a RingCentral SDK instance
+      Open the AppDelegate.swift file to define and initialize a RingCentral instance.
+
+  .step(data-title='Next step', data-file='Call Analytics/Base.lproj/Main.storyboard', data-highlight='24-46')
+    :markdown
+      ## Create a login view
+      ### Define a navigation bar
+      Open the Main.storyboard then select the default View Controller and drag and drop a few UI components to make a Navigation Bar as shown below
+
+      ![](images/image02.png)
+
+  .step(data-title='Next step', data-file='Call Analytics/Base.lproj/Main.storyboard', data-highlight='68-94')
+    :markdown
+      ### Define a login form
+      Then drag and drop a view container (UIView) and add 3 text fields (UITextField) as shown below
+
+      ![](images/image03.png)
+
+  .step(data-title='Next step', data-file='Call Analytics/Base.lproj/Main.storyboard', data-highlight='47-67')
+    :markdown
+      ### Define a menu button form
+      Now drag and drop another view container (UIView) and add a button (UIButton) as shown below
+
+      ![](images/image04.png)
+
+  .step(data-title='Next step', data-file='Call Analytics/ViewController.swift', data-highlight='15-20')
+    :markdown
+      ### Connect UIs to code
+      Now click the Assistant button in the Xcode toolbar and connect the UI to code
+
+  .step(data-title='Next step', data-file='Call Analytics/ViewController.swift', data-highlight='53-84')
+    :markdown
+      ### Connect the Login button to code
+      The login button is the right item on the Navigation bar
+
+  .step(data-title='Next step', data-file='Call Analytics/ViewController.swift', data-highlight='94-97')
+    :markdown
+      ### Connect the Call Logs button to code
+      The "Call Logs" button is the button inside the menu button form.

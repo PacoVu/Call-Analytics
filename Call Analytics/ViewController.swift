@@ -31,9 +31,6 @@ class ViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate 
         passwordTextField.delegate = self
         extensionTextField.delegate = self
         
-        usernameTextField.text = Credentials.Username
-        passwordTextField.text = Credentials.Password
-        extensionTextField.text = Credentials.Extension
     }
     
     override func didReceiveMemoryWarning() {
