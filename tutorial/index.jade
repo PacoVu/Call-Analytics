@@ -1,4 +1,4 @@
-.chapter(data-title='Your New Viewsaurus Tutorial')
+.chapter(data-title='RingCentral for Swift Tutorial')
   .step(data-title='Welcome!', data-file='tutorial/config.json')
     h2 Call Analytics for iOS
 
@@ -71,12 +71,62 @@
       ### Connect UIs to code
       Now click the Assistant button in the Xcode toolbar and connect the UI to code
 
-  .step(data-title='Next step', data-file='Call Analytics/ViewController.swift', data-highlight='53-84')
+  .step(data-title='Next step', data-file='Call Analytics/ViewController.swift', data-highlight='52-82')
     :markdown
       ### Connect the Login button to code
       The login button is the right item on the Navigation bar
 
-  .step(data-title='Next step', data-file='Call Analytics/ViewController.swift', data-highlight='94-97')
+  .step(data-title='Next step', data-file='Call Analytics/ViewController.swift', data-highlight='92-95')
     :markdown
       ### Connect the Call Logs button to code
       The "Call Logs" button is the button inside the menu button form.
+
+  .step(data-title='Next step', data-file='Call Analytics/ViewController.swift', data-highlight='52-82')
+    :markdown
+      ### Implement the rightNavBarBtnClicked function
+      Inside the function, we implement code to login and logout and switch the view between login form and menu button form accordingly.
+
+  .step(data-title='Next step', data-file='Call Analytics/ViewController.swift', data-highlight='71-80')
+    :markdown
+      ### Login
+      To login RingCentral account, we call the authorize function passing the username, password and the extension if it is provided.
+
+      If login is successful, we toggle the view to show the menu button view and change the right navigation bar button text to "Logout" .
+
+  .step(data-title='Next step', data-file='Call Analytics/ViewController.swift', data-highlight='53-59')
+    :markdown
+      ### Logout
+      To logout, we call the revoke function and reset the access token, then toggle the view to show the login form and change the right navigation bar button text to "Login".
+
+  .step(data-title='Next step')
+    :markdown
+      ### Create a CallInfoViewController
+      First, we create a new file and select the Cocoa Touch class type and name it “CallInfoViewController”
+
+      ![](images/image05.png)
+
+      Next, open the Main.storyboard then drag and drop a new View Controller to the storyboard
+
+      Now, click the Identity inspector then select the CallInfoViewController class and specify the Identity Storyboard ID as “calllogview”
+
+  .step(data-title='Next step', data-file='html/image08.html')
+    :markdown
+      ### Add UI components to the view
+      We need a navigation bar, an input view and an output view with various UI components as illustrated below
+
+      ![](images/image06.png)
+
+      We need an input form
+
+      ![](images/image07.png)
+
+      And we need an output view
+
+      ![](images/image08.png)
+
+  .step(data-title='Next step', data-file='Call Analytics/CallInfoViewController.swift')
+    :markdown
+      ### Connect UIs to code
+      Now click the Assistant button in the Xcode toolbar and connect the UI to code
+
+      ![](images/image06.png)

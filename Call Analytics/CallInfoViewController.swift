@@ -13,14 +13,7 @@ import RingCentral
 
 class CallInfoViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource {
     
-    @IBOutlet weak var totalCallsDuration: UILabel!
-    @IBOutlet weak var outcallsDuration: UILabel!
-    @IBOutlet weak var incallsDuration: UILabel!
-
-    @IBOutlet weak var callLogResultCollectionView: UICollectionView!
-    @IBOutlet weak var outputView: UIView!
     @IBOutlet weak var inputsView: UIView!
-    
     @IBOutlet weak var phoneNumber: UITextField!
     @IBOutlet weak var extensionNumber: UITextField!
     @IBOutlet weak var directionPicker: UIPickerView!
@@ -31,6 +24,13 @@ class CallInfoViewController: UIViewController, UITextViewDelegate, UITextFieldD
     @IBOutlet weak var withRecordingSwitch: UISwitch!
     @IBOutlet weak var fromDatePicker: UIDatePicker!
     @IBOutlet weak var toDatePicker: UIDatePicker!
+
+    @IBOutlet weak var outputView: UIView!
+    @IBOutlet weak var callLogResultCollectionView: UICollectionView!
+
+    @IBOutlet weak var outcallsDuration: UILabel!
+    @IBOutlet weak var incallsDuration: UILabel!
+    @IBOutlet weak var totalCallsDuration: UILabel!
     
     var directionArray: NSArray = ["Default", "Inbound", "Outbound"]
     var typeArray: NSArray = ["Default", "Voice", "Fax"]
@@ -289,6 +289,7 @@ class CallInfoViewController: UIViewController, UITextViewDelegate, UITextFieldD
                     self.inputsView.isHidden = true
                     self.outputView.isHidden = false
                     self.callLogResultCollectionView.reloadData()
+                    self.setCallsValues()
                 })
             }else{
                 print(error?.message ?? "nil")
@@ -305,5 +306,66 @@ class CallInfoViewController: UIViewController, UITextViewDelegate, UITextFieldD
         }
     }
     
+    func setCallsValues() {
+        //callTypes = ["InCall", "OutCall", "Voice Mail", "Fax", "Missed"]
+        
+        var incall = 0;
+        var outcall = 0
+        var voice = 0
+        var fax = 0
+        var missed = 0
+        var records = 0
+        var totalIncallsDur = 0
+        var totalOutcallsDur = 0
+        
+        
+        for item in callLogRecords {
+            let record = item as! CallLogRecord
+            if (record.type == "Fax") {
+                fax += 1
+                /*
+                 if (record.direction == "Inbound") {
+                 image.image = UIImage(named: "incomingFax")
+                 }else{
+                 image.image = UIImage(named: "outgoingFax")
+                 }
+                 */
+            }else{
+                if (record.direction == "Inbound") {
+                    incall += 1
+                    totalIncallsDur += record.duration!
+                }else{
+                    outcall += 1
+                    totalOutcallsDur += record.duration!
+                }
+                
+            }
+            if (record.message != nil || record.recording != nil) {
+                voice += 1
+            }else if (record.recording != nil){
+                records += 1
+            }
+            if record.result == "Missed" {
+                missed += 1
+            }
+        }
+        
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.hour, .minute, .second]
+        formatter.unitsStyle = .brief
+        
+        var formattedString = formatter.string(from: TimeInterval(totalIncallsDur))!
+        
+        
+        incallsDuration.text = String(format: "Total incalls duration: %@", formattedString)
+        
+        formattedString = formatter.string(from: TimeInterval(totalOutcallsDur))!
+        outcallsDuration.text = String(format: "Total outcalls duration: %@", formattedString)
+        
+        let totalDur = totalIncallsDur + totalOutcallsDur
+        
+        formattedString = formatter.string(from: TimeInterval(totalDur))!
+        totalCallsDuration.text = String(format: "Total calls duration: %@", formattedString)
+    }
 }
 
