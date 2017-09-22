@@ -140,6 +140,28 @@ class CallInfoViewController: UIViewController, UITextViewDelegate, UITextFieldD
         }
     }
     
+    @IBAction func fromDatePickerValueChanged(_ sender: UIDatePicker) {
+        let date:String = String(describing: sender.date)
+        let index = date.index(date.startIndex, offsetBy: 10)
+        queryDateFrom = date.substring(to: index)
+        calllogReq.dateFrom = queryDateFrom
+    }
+    
+    @IBAction func toDatePickerValueChanged(_ sender: UIDatePicker) {
+        let date:String = String(describing: sender.date)
+        let index = date.index(date.startIndex, offsetBy: 10)
+        queryDateTo = date.substring(to: index)
+        calllogReq.dateTo = queryDateTo + "T23:59:59.999Z"
+    }
+    
+    @IBAction func withRecordingSwitchValueChanged(_ sender: UISwitch) {
+        calllogReq.withRecording = sender.isOn
+    }
+    
+    @IBAction func showBlockedSwitchValueChanged(_ sender: UISwitch) {
+        calllogReq.showBlocked = sender.isOn
+    }
+
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView
     {
         let pickerLabel = UILabel()
@@ -158,21 +180,6 @@ class CallInfoViewController: UIViewController, UITextViewDelegate, UITextFieldD
         
         return pickerLabel
     }
-
-    @IBAction func fromDatePickerValueChanged(_ sender: UIDatePicker) {
-        let date:String = String(describing: sender.date)
-        let index = date.index(date.startIndex, offsetBy: 10)
-        queryDateFrom = date.substring(to: index)
-        calllogReq.dateFrom = queryDateFrom
-
-    }
-    
-    @IBAction func toDatePickerValueChanged(_ sender: UIDatePicker) {
-        let date:String = String(describing: sender.date)
-        let index = date.index(date.startIndex, offsetBy: 10)
-        queryDateTo = date.substring(to: index)
-        calllogReq.dateTo = queryDateTo + "T23:59:59.999Z"
-    }
     
     // list implementation
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -190,17 +197,7 @@ class CallInfoViewController: UIViewController, UITextViewDelegate, UITextFieldD
         }
         return returnVal
     }
-    /*
-    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.alpha = 0.7
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.alpha = 1.0
-    }
-    */
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     {
         var cell : UICollectionViewCell!
@@ -262,13 +259,6 @@ class CallInfoViewController: UIViewController, UITextViewDelegate, UITextFieldD
         }
         return cell
     }
-
-    @IBAction func withRecordingSwitchValueChanged(_ sender: UISwitch) {
-        calllogReq.withRecording = sender.isOn
-    }
-    @IBAction func showBlockedSwitchValueChanged(_ sender: UISwitch) {
-        calllogReq.showBlocked = sender.isOn
-    }
     
     @IBAction func ReadBtnClicked(_ sender: UIBarButtonItem) {
         if (phoneNumber.text != "") {
@@ -315,7 +305,6 @@ class CallInfoViewController: UIViewController, UITextViewDelegate, UITextFieldD
         var records = 0
         var totalIncallsDur = 0
         var totalOutcallsDur = 0
-        
         
         for item in callLogRecords {
             let record = item as! CallLogRecord
