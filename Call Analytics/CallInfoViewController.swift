@@ -181,6 +181,41 @@ class CallInfoViewController: UIViewController, UITextViewDelegate, UITextFieldD
         return pickerLabel
     }
     
+    @IBAction func ReadBtnClicked(_ sender: UIBarButtonItem) {
+        if (phoneNumber.text != "") {
+            calllogReq.phoneNumber = phoneNumber.text
+        }else{
+            calllogReq.phoneNumber = nil
+        }
+        if (extensionNumber.text != "") {
+            calllogReq.extensionNumber = extensionNumber.text
+        }else{
+            calllogReq.extensionNumber = nil
+        }
+        rc.restapi().account().callLog().list(parameters: calllogReq) { list, error in
+            if (error == nil) {
+                self.callLogRecords = list?.records as! NSMutableArray
+                DispatchQueue.main.async(execute: {
+                    self.inputsView.isHidden = true
+                    self.outputView.isHidden = false
+                    self.callLogResultCollectionView.reloadData()
+                    self.setCallsValues()
+                })
+            }else{
+                print(error?.message ?? "nil")
+            }
+        }
+    }
+    
+    @IBAction func BackBtnClicked(_ sender: UIBarButtonItem) {
+        if (inputsView.isHidden == false) {
+            dismiss(animated: true, completion: nil)
+        }else {
+            outputView.isHidden = true
+            inputsView.isHidden = false
+        }
+    }
+    
     // list implementation
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         var returnVal = 0
@@ -213,7 +248,6 @@ class CallInfoViewController: UIViewController, UITextViewDelegate, UITextFieldD
             }
             
             let record = callLogRecords[indexPath.row] as! CallLogRecord
-            
             let fromNum:UILabel = cell.viewWithTag(1) as! UILabel
             fromNum.text = record.from?.phoneNumber
             let fromName:UILabel = cell.viewWithTag(2) as! UILabel
@@ -258,41 +292,6 @@ class CallInfoViewController: UIViewController, UITextViewDelegate, UITextFieldD
             }
         }
         return cell
-    }
-    
-    @IBAction func ReadBtnClicked(_ sender: UIBarButtonItem) {
-        if (phoneNumber.text != "") {
-            calllogReq.phoneNumber = phoneNumber.text
-        }else{
-            calllogReq.phoneNumber = nil
-        }
-        if (extensionNumber.text != "") {
-            calllogReq.extensionNumber = extensionNumber.text
-        }else{
-            calllogReq.extensionNumber = nil
-        }
-        rc.restapi().account().callLog().list(parameters: calllogReq) { list, error in
-            if (error == nil) {
-                self.callLogRecords = list?.records as! NSMutableArray
-                DispatchQueue.main.async(execute: {
-                    self.inputsView.isHidden = true
-                    self.outputView.isHidden = false
-                    self.callLogResultCollectionView.reloadData()
-                    self.setCallsValues()
-                })
-            }else{
-                print(error?.message ?? "nil")
-            }
-        }
-    }
-    
-    @IBAction func BackBtnClicked(_ sender: UIBarButtonItem) {
-        if (inputsView.isHidden == false) {
-            dismiss(animated: true, completion: nil)
-        }else {
-            outputView.isHidden = true
-            inputsView.isHidden = false
-        }
     }
     
     func setCallsValues() {
