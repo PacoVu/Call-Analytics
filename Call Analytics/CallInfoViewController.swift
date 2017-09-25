@@ -13,14 +13,7 @@ import RingCentral
 
 class CallInfoViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource {
     
-    @IBOutlet weak var totalCallsDuration: UILabel!
-    @IBOutlet weak var outcallsDuration: UILabel!
-    @IBOutlet weak var incallsDuration: UILabel!
-
-    @IBOutlet weak var callLogResultCollectionView: UICollectionView!
-    @IBOutlet weak var outputView: UIView!
     @IBOutlet weak var inputsView: UIView!
-    
     @IBOutlet weak var phoneNumber: UITextField!
     @IBOutlet weak var extensionNumber: UITextField!
     @IBOutlet weak var directionPicker: UIPickerView!
@@ -31,6 +24,14 @@ class CallInfoViewController: UIViewController, UITextViewDelegate, UITextFieldD
     @IBOutlet weak var withRecordingSwitch: UISwitch!
     @IBOutlet weak var fromDatePicker: UIDatePicker!
     @IBOutlet weak var toDatePicker: UIDatePicker!
+
+    @IBOutlet weak var outputView: UIView!
+    @IBOutlet weak var callLogResultCollectionView: UICollectionView!
+
+    @IBOutlet weak var outcallsDuration: UILabel!
+    @IBOutlet weak var incallsDuration: UILabel!
+    @IBOutlet weak var totalCallsDuration: UILabel!
+    @IBOutlet weak var count: UILabel!
     
     var directionArray: NSArray = ["Default", "Inbound", "Outbound"]
     var typeArray: NSArray = ["Default", "Voice", "Fax"]
@@ -139,6 +140,28 @@ class CallInfoViewController: UIViewController, UITextViewDelegate, UITextFieldD
         }
     }
     
+    @IBAction func fromDatePickerValueChanged(_ sender: UIDatePicker) {
+        let date:String = String(describing: sender.date)
+        let index = date.index(date.startIndex, offsetBy: 10)
+        queryDateFrom = date.substring(to: index)
+        calllogReq.dateFrom = queryDateFrom
+    }
+    
+    @IBAction func toDatePickerValueChanged(_ sender: UIDatePicker) {
+        let date:String = String(describing: sender.date)
+        let index = date.index(date.startIndex, offsetBy: 10)
+        queryDateTo = date.substring(to: index)
+        calllogReq.dateTo = queryDateTo + "T23:59:59.999Z"
+    }
+    
+    @IBAction func withRecordingSwitchValueChanged(_ sender: UISwitch) {
+        calllogReq.withRecording = sender.isOn
+    }
+    
+    @IBAction func showBlockedSwitchValueChanged(_ sender: UISwitch) {
+        calllogReq.showBlocked = sender.isOn
+    }
+
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView
     {
         let pickerLabel = UILabel()
@@ -157,20 +180,40 @@ class CallInfoViewController: UIViewController, UITextViewDelegate, UITextFieldD
         
         return pickerLabel
     }
-
-    @IBAction func fromDatePickerValueChanged(_ sender: UIDatePicker) {
-        let date:String = String(describing: sender.date)
-        let index = date.index(date.startIndex, offsetBy: 10)
-        queryDateFrom = date.substring(to: index)
-        calllogReq.dateFrom = queryDateFrom
-
+    
+    @IBAction func ReadBtnClicked(_ sender: UIBarButtonItem) {
+        if (phoneNumber.text != "") {
+            calllogReq.phoneNumber = phoneNumber.text
+        }else{
+            calllogReq.phoneNumber = nil
+        }
+        if (extensionNumber.text != "") {
+            calllogReq.extensionNumber = extensionNumber.text
+        }else{
+            calllogReq.extensionNumber = nil
+        }
+        rc.restapi().account().callLog().list(parameters: calllogReq) { list, error in
+            if (error == nil) {
+                self.callLogRecords = list?.records as! NSMutableArray
+                DispatchQueue.main.async(execute: {
+                    self.inputsView.isHidden = true
+                    self.outputView.isHidden = false
+                    self.callLogResultCollectionView.reloadData()
+                    self.setCallsValues()
+                })
+            }else{
+                print(error?.message ?? "nil")
+            }
+        }
     }
     
-    @IBAction func toDatePickerValueChanged(_ sender: UIDatePicker) {
-        let date:String = String(describing: sender.date)
-        let index = date.index(date.startIndex, offsetBy: 10)
-        queryDateTo = date.substring(to: index)
-        calllogReq.dateTo = queryDateTo + "T23:59:59.999Z"
+    @IBAction func BackBtnClicked(_ sender: UIBarButtonItem) {
+        if (inputsView.isHidden == false) {
+            dismiss(animated: true, completion: nil)
+        }else {
+            outputView.isHidden = true
+            inputsView.isHidden = false
+        }
     }
     
     // list implementation
@@ -180,28 +223,16 @@ class CallInfoViewController: UIViewController, UITextViewDelegate, UITextFieldD
             returnVal = 1
         }
         return returnVal
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var returnVal = 0
         if (collectionView == self.callLogResultCollectionView) {
             returnVal = callLogRecords.count
-            print(returnVal)
         }
         return returnVal
     }
-    
-    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.alpha = 0.7
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.alpha = 1.0
-    }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     {
         var cell : UICollectionViewCell!
@@ -217,7 +248,6 @@ class CallInfoViewController: UIViewController, UITextViewDelegate, UITextFieldD
             }
             
             let record = callLogRecords[indexPath.row] as! CallLogRecord
-            
             let fromNum:UILabel = cell.viewWithTag(1) as! UILabel
             fromNum.text = record.from?.phoneNumber
             let fromName:UILabel = cell.viewWithTag(2) as! UILabel
@@ -263,47 +293,60 @@ class CallInfoViewController: UIViewController, UITextViewDelegate, UITextFieldD
         }
         return cell
     }
-
-    @IBAction func withRecordingSwitchValueChanged(_ sender: UISwitch) {
-        calllogReq.withRecording = sender.isOn
-    }
-    @IBAction func showBlockedSwitchValueChanged(_ sender: UISwitch) {
-        calllogReq.showBlocked = sender.isOn
-    }
     
-    @IBAction func ReadBtnClicked(_ sender: UIBarButtonItem) {
-        if (phoneNumber.text != "") {
-            calllogReq.phoneNumber = phoneNumber.text
-        }else{
-            calllogReq.phoneNumber = nil
-        }
-        if (extensionNumber.text != "") {
-            calllogReq.extensionNumber = extensionNumber.text
-        }else{
-            calllogReq.extensionNumber = nil
-        }
-        rc.restapi().account().callLog().list(parameters: calllogReq) { list, error in
-            if (error == nil) {
-                self.callLogRecords = list?.records as! NSMutableArray
-                DispatchQueue.main.async(execute: {
-                    self.inputsView.isHidden = true
-                    self.outputView.isHidden = false
-                    self.callLogResultCollectionView.reloadData()
-                })
+    func setCallsValues() {
+        var incall = 0;
+        var outcall = 0
+        var voice = 0
+        var infax = 0
+        var outfax = 0
+        var missed = 0
+        var records = 0
+        var totalIncallsDur = 0
+        var totalOutcallsDur = 0
+        
+        for item in callLogRecords {
+            let record = item as! CallLogRecord
+            if (record.type == "Fax") {
+                if (record.direction == "Inbound") {
+                    infax += 1
+                }else{
+                    outfax += 1
+                }
             }else{
-                print(error?.message ?? "nil")
+                if (record.direction == "Inbound") {
+                    incall += 1
+                    totalIncallsDur += record.duration!
+                }else{
+                    outcall += 1
+                    totalOutcallsDur += record.duration!
+                }
+            }
+            if (record.message != nil || record.recording != nil) {
+                voice += 1
+            }else if (record.recording != nil){
+                records += 1
+            }
+            if record.result == "Missed" {
+                missed += 1
             }
         }
+        
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.hour, .minute, .second]
+        formatter.unitsStyle = .brief
+        
+        var formattedString = formatter.string(from: TimeInterval(totalIncallsDur))!
+        incallsDuration.text = String(format: "Total incalls duration: %@", formattedString)
+        
+        formattedString = formatter.string(from: TimeInterval(totalOutcallsDur))!
+        outcallsDuration.text = String(format: "Total outcalls duration: %@", formattedString)
+        
+        let totalDur = totalIncallsDur + totalOutcallsDur
+        formattedString = formatter.string(from: TimeInterval(totalDur))!
+        totalCallsDuration.text = String(format: "Total calls duration: %@", formattedString)
+        
+        count.text = String(format:"InCall: %d / OutCall: %d / Missed Call: %d / InFax: %d / OutFax: %d", incall, outcall, missed, infax, outfax)
     }
-    
-    @IBAction func BackBtnClicked(_ sender: UIBarButtonItem) {
-        if (inputsView.isHidden == false) {
-            dismiss(animated: true, completion: nil)
-        }else {
-            outputView.isHidden = true
-            inputsView.isHidden = false
-        }
-    }
-    
 }
 

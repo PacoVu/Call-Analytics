@@ -30,10 +30,6 @@ class ViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate 
         usernameTextField.delegate = self
         passwordTextField.delegate = self
         extensionTextField.delegate = self
-        
-        usernameTextField.text = Credentials.Username
-        passwordTextField.text = Credentials.Password
-        extensionTextField.text = Credentials.Extension
     }
     
     override func didReceiveMemoryWarning() {
@@ -54,7 +50,6 @@ class ViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate 
     }
     
     @IBAction func rightNavBarBtnClicked(_ sender: UIBarButtonItem? = nil) {
-        
         if rc != nil && rc.token != nil { // being logged in => logout
             rc.revoke()
             rc.token = nil

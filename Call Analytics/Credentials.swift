@@ -11,9 +11,3 @@ struct Configs {
     static let AppKey = "Your-AppKey"
     static let AppSecret = "Your-AppSecret"
 }
-
-struct Credentials {
-    static let Username = ""
-    static let Password = ""
-    static let Extension = ""
-}
